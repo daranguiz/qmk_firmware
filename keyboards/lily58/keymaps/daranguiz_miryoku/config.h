@@ -16,7 +16,7 @@
 #define IGNORE_MOD_TAP_INTERRUPT
 
 // Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
-#define TAPPING_FORCE_HOLD
+#define TAPPING_FORCE_HOLD_PER_KEY
 
 // Auto Shift
 #define NO_AUTO_SHIFT_ALPHA
@@ -40,6 +40,17 @@
 
 // Dario-specific customization
 #define MIRYOKU_ALPHAS_COLEMAK
+
+// https://thomasbaart.nl/2018/12/01/reducing-firmware-size-in-qmk/
+#define NO_ACTION_MACRO
+#define NO_ACTION_FUNCTION
+
+#ifndef NO_DEBUG
+#define NO_DEBUG
+#endif // !NO_DEBUG
+#if !defined(NO_PRINT) && !defined(CONSOLE_ENABLE)
+#define NO_PRINT
+#endif // !NO_PRINT
 
 
 //////////////////////// - Keyboard layout

@@ -6,7 +6,23 @@ MOUSEKEY_ENABLE = yes # Mouse keys
 EXTRAKEY_ENABLE = yes # Audio control and System control
 AUTO_SHIFT_ENABLE = yes # Auto Shift
 
+OLED_ENABLE = no
+WPM_ENABLE = yes
+LTO_ENABLE = yes
+
+# Space Saving
+AUDIO_ENABLE = no
+CONSOLE_ENABLE = no
+
 SRC += daranguiz_miryoku.c # keymap
+
+SRC +=  ./lib/rgb_state_reader.c \
+        ./lib/layer_state_reader.c \
+        ./lib/logo_reader.c \
+        ./lib/keylogger.c \
+        # ./lib/mode_icon_reader.c \
+        # ./lib/host_led_state_reader.c \
+        # ./lib/timelogger.c \
 
 # alternative layouts:
 
