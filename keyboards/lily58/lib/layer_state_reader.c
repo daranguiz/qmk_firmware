@@ -16,38 +16,71 @@
 char layer_state_str[24];
 
 const char *read_layer_state(void) {
+//   switch (layer_state)
+//   {
+//   case L_BASE:
+//     snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Default");
+//     break;
+//   case L_BUTTON:
+//     snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Button");
+//     break;
+//   case L_MEDIA:
+//     snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Media");
+//     break;
+//   case L_NAV:
+//     snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Navigation");
+//     break;
+//   case L_MOUSE:
+//     snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Mouse");
+//     break;
+//   case L_SYM:
+//     snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Symbol");
+//     break;
+//   case L_NUM:
+//     snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Number");
+//     break;
+//   case L_FUN:
+//     snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Function");
+//     break;
+//   case L_GAME:
+//     snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Gaming");
+//     break;
+//   default:
+//     break;
+//   }
+
   switch (layer_state)
   {
   case L_BASE:
-    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Default");
+    return "Layer: Default";
     break;
   case L_BUTTON:
-    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Button");
+    return "Layer: Button";
     break;
   case L_MEDIA:
-    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Media");
+    return "Layer: Media";
     break;
   case L_NAV:
-    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Navigation");
+    return "Layer: Navigation";
     break;
   case L_MOUSE:
-    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Mouse");
+    return "Layer: Mouse";
     break;
   case L_SYM:
-    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Symbol");
+    return "Layer: Symbol";
     break;
   case L_NUM:
-    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Number");
+    return "Layer: Number";
     break;
   case L_FUN:
-    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Function");
+    return "Layer: Function";
     break;
   case L_GAME:
-    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Gaming");
+    return "Layer: Gaming";
     break;
   default:
-    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Undef-%ld", layer_state);
+    break;
   }
 
-  return layer_state_str;
+  return NULL;
 }
