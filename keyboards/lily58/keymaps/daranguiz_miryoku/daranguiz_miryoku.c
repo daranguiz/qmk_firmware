@@ -234,15 +234,46 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
   KC_LCTRL, KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
   KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_LBRC,  KC_RBRC,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
-                        KC_LALT, KC_LGUI, U_NP, KC_SPC, KC_ENT, U_NP, KC_BSPC, KC_RGUI
+                        KC_LALT, KC_LGUI, KC_SPC, KC_SPC, KC_ENT, U_NP, KC_BSPC, KC_RGUI
   )
 };
 
-volatile static enum layers cur_layer = BASE;
+/*
+ * Per key tapping term settings
+ */
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    // https://www.reddit.com/r/ErgoMechKeyboards/comments/ibsi0k/comment/g1yntmv
+    switch (keycode) {
+        case HOME_R:
+        case HOME_I:
+        case HOME_A:
+        case HOME_O:
+            // For some reason, typing words like "forward" is very difficult.
+            return TAPPING_TERM + 250;
+        case HOME_T:
+        case HOME_N:
+            // But it seems that shift happens pretty quickly
+            return TAPPING_TERM - 100;
+        default:
+            return TAPPING_TERM;
+    }
+}
 
-// // Runs whenever there is a layer state change.
+bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case HOME_T:
+        case HOME_N:
+            // Immediately select the hold action when another key is tapped.
+            return true;
+        default:
+            // Do not select the hold action when another key is tapped.
+            return false;
+    }
+}
+
+// Runs whenever there is a layer state change.
 layer_state_t layer_state_set_user(layer_state_t  state) {
-    cur_layer = get_highest_layer(state);
+    enum layers cur_layer = get_highest_layer(state);
 
     switch (cur_layer)
     {
@@ -258,19 +289,6 @@ layer_state_t layer_state_set_user(layer_state_t  state) {
     // Don't delete! This is what updates layers!
     return state;
 }
-
-// bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
-//     switch (keycode) {
-//         case KC_TAB:
-//             if (IS_LAYER_ON(GAME)) {
-//                 return false;
-//             } else {
-//                 return true;
-//             }
-//         default:
-//             return true;
-//     }
-// }
 
 //SSD1306 OLED update loop, make sure to enable OLED_DRIVER_ENABLE=yes in rules.mk
 #ifdef OLED_ENABLE
@@ -465,18 +483,23 @@ static void render_luna(int LUNA_X, int LUNA_Y) {
         }
     }
 
+    static bool is_oled_on = true;
+
     /* animation timer */
-    if(timer_elapsed32(anim_timer) > ANIM_FRAME_DURATION) {
+    if(timer_elapsed32(anim_timer) > ANIM_FRAME_DURATION && is_oled_on) {
         anim_timer = timer_read32();
         animate_luna();
     }
 
-    /* this fixes the screen on and off bug */
+    // To turn off the oled on inactivity
+    // Current timeout is 30
     if (current_wpm > 0) {
         oled_on();
+        is_oled_on = true;
         anim_sleep = timer_read32();
     } else if(timer_elapsed32(anim_sleep) > OLED_TIMEOUT) {
         oled_off();
+        is_oled_on = false;
     }
 
 }
@@ -508,7 +531,7 @@ static void print_status_narrow(void) {
 
     switch (get_highest_layer(layer_state)) {
         case BASE:
-            oled_write("CLMK ", false);
+            oled_write("COLMK", false);
             break;
         case BUTTON:
             oled_write("BUTTN", false);
