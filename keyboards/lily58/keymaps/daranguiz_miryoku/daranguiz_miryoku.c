@@ -483,25 +483,11 @@ static void render_luna(int LUNA_X, int LUNA_Y) {
         }
     }
 
-    static bool is_oled_on = true;
-
     /* animation timer */
-    if(timer_elapsed32(anim_timer) > ANIM_FRAME_DURATION && is_oled_on) {
+    if(timer_elapsed32(anim_timer) > ANIM_FRAME_DURATION) {
         anim_timer = timer_read32();
         animate_luna();
     }
-
-    // To turn off the oled on inactivity
-    // Current timeout is 30
-    if (current_wpm > 0) {
-        oled_on();
-        is_oled_on = true;
-        anim_sleep = timer_read32();
-    } else if(timer_elapsed32(anim_sleep) > OLED_TIMEOUT) {
-        oled_off();
-        is_oled_on = false;
-    }
-
 }
 
 /* KEYBOARD PET END */
@@ -582,6 +568,8 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     return OLED_ROTATION_270;
 }
 
+volatile static uint32_t _last_input_time = 0;
+
 bool oled_task_user(void) {
 
     /* KEYBOARD PET VARIABLES START */
@@ -591,10 +579,14 @@ bool oled_task_user(void) {
 
     /* KEYBOARD PET VARIABLES END */
 
-    if (is_keyboard_master()) {
-        print_status_narrow();
+    if (timer_elapsed32(_last_input_time) > OLED_TIMEOUT) {
+        oled_off();
     } else {
-        print_logo_narrow();
+        if (is_keyboard_master()) {
+            print_status_narrow();
+        } else {
+            print_logo_narrow();
+        }
     }
 
     return false;
@@ -603,37 +595,7 @@ bool oled_task_user(void) {
 #endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-//       if (record->event.pressed) {
-// #ifdef OLED_ENABLE
-//     set_keylog(keycode, record);
-// #endif
-//     // set_timelog();
-//   }
     switch (keycode) {
-        // case QWERTY:
-        //     if (record->event.pressed) {
-        //         set_single_persistent_default_layer(_QWERTY);
-        //     }
-        //     return false;
-        // case LOWER:
-        //     if (record->event.pressed) {
-        //         layer_on(_LOWER);
-        //         update_tri_layer(_LOWER, _RAISE, _ADJUST);
-        //     } else {
-        //         layer_off(_LOWER);
-        //         update_tri_layer(_LOWER, _RAISE, _ADJUST);
-        //     }
-        //     return false;
-        // case RAISE:
-        //     if (record->event.pressed) {
-        //         layer_on(_RAISE);
-        //         update_tri_layer(_LOWER, _RAISE, _ADJUST);
-        //     } else {
-        //         layer_off(_RAISE);
-        //         update_tri_layer(_LOWER, _RAISE, _ADJUST);
-        //     }
-        //     return false
-
         /* KEYBOARD PET STATUS START */
 
         case KC_LCTL:
@@ -661,15 +623,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         /* KEYBOARD PET STATUS END */
     }
+
+    // For oled management
+    _last_input_time = timer_read32();
+    oled_on();
+
     return true;
 }
-
-// bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-//   if (record->event.pressed) {
-// #ifdef OLED_ENABLE
-//     set_keylog(keycode, record);
-// #endif
-//     // set_timelog();
-//   }
-//   return true;
-// }
