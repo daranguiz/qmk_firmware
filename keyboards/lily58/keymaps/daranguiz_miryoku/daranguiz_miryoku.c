@@ -255,7 +255,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case HOME_T:
         case HOME_N:
             // But it seems that shift happens pretty quickly
-            return TAPPING_TERM - 70;
+            return TAPPING_TERM - 50;
         default:
             return TAPPING_TERM;
     }

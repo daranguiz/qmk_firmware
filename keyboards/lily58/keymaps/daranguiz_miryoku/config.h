@@ -13,7 +13,8 @@
 #define TAPPING_TERM 200
 #define TAPPING_TERM_PER_KEY
 
-// #define BILATERAL_COMBINATIONS 500
+// Not actually implemented yet :(
+#define BILATERAL_COMBINATIONS 300
 
 // Prevent normal rollover on alphas from accidentally triggering mods.
 #define IGNORE_MOD_TAP_INTERRUPT
