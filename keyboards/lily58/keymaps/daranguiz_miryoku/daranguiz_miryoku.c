@@ -264,7 +264,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // Because I'll often quick-tap symbols like '-'
-        case LT(SYM, KC_ENT):
+        case LT(NUM, KC_BSPC):
         // Because I like this for full-word backspace (win + mac)
         case LALT_T(KC_R):
         case LCTL_T(KC_S):
