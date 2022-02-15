@@ -248,12 +248,14 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case HOME_I:
         case HOME_A:
         case HOME_O:
+        case HOME_S:
+        case HOME_E:
             // For some reason, typing words like "forward" is very difficult.
-            return TAPPING_TERM + 250;
+            return TAPPING_TERM + 100;
         case HOME_T:
         case HOME_N:
             // But it seems that shift happens pretty quickly
-            return TAPPING_TERM - 100;
+            return TAPPING_TERM - 70;
         default:
             return TAPPING_TERM;
     }
@@ -261,12 +263,11 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case HOME_T:
-        case HOME_N:
-            // Immediately select the hold action when another key is tapped.
+        // case LGUI_T(KC_A):
+        // case LT(NAV, KC_SPC):
+        case LT(SYM, KC_ENT):
             return true;
         default:
-            // Do not select the hold action when another key is tapped.
             return false;
     }
 }
