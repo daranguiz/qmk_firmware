@@ -238,61 +238,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   )
 };
 
-/*
- * Per key tapping term settings
- */
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    // https://www.reddit.com/r/ErgoMechKeyboards/comments/ibsi0k/comment/g1yntmv
-    switch (keycode) {
-        case HOME_R:
-        case HOME_I:
-        case HOME_A:
-        case HOME_O:
-        case HOME_S:
-        case HOME_E:
-            // For some reason, typing words like "forward" is very difficult.
-            return TAPPING_TERM + 100;
-        case HOME_T:
-        case HOME_N:
-            // But it seems that shift happens pretty quickly
-            return TAPPING_TERM - 50;
-        default:
-            return TAPPING_TERM;
-    }
-}
-
-bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        // Because I'll often quick-tap symbols like '-'
-        case LT(NUM, KC_BSPC):
-        // Because I like this for full-word backspace (win + mac)
-        case LALT_T(KC_R):
-        case LCTL_T(KC_S):
-            return true;
-        default:
-            return false;
-    }
-}
-
-// Runs whenever there is a layer state change.
-layer_state_t layer_state_set_user(layer_state_t  state) {
-    enum layers cur_layer = get_highest_layer(state);
-
-    switch (cur_layer)
-    {
-    case GAME:
-        autoshift_disable();
-        break;
-
-    default:
-        autoshift_enable();
-        break;
-    }
-
-    // Don't delete! This is what updates layers!
-    return state;
-}
-
 //SSD1306 OLED update loop, make sure to enable OLED_DRIVER_ENABLE=yes in rules.mk
 #ifdef OLED_ENABLE
 
@@ -632,4 +577,69 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     oled_on();
 
     return true;
+}
+
+/*
+ * Per key tapping term settings
+ */
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    // https://www.reddit.com/r/ErgoMechKeyboards/comments/ibsi0k/comment/g1yntmv
+    switch (keycode) {
+        case HOME_R:
+        case HOME_I:
+        case HOME_A:
+        case HOME_O:
+        case HOME_S:
+        case HOME_E:
+            // For some reason, typing words like "forward" is very difficult.
+            return TAPPING_TERM + 200;
+        case HOME_T:
+        case HOME_N:
+            // But it seems that shift happens pretty quickly
+            return TAPPING_TERM - 30;
+        default:
+            return TAPPING_TERM;
+    }
+}
+
+/*
+ * Per-key permissive hold settings.
+ * Really only enabled for a few keys on the left hand (to support 1H key chords)
+ */
+bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        // Because I'll often quick-tap symbols like '-'
+        // This is on for all chords involving this key.
+        case LT(NUM, KC_BSPC):
+
+        // Because I like this for full-word backspace (win + mac)
+        // This is ONLY on for certain chords (backspace, copy/paste, etc).
+        // See process_record_user for a distinct list.
+        case HOME_R:
+        case HOME_S:
+            return true;
+
+        // Everything else is off by default.
+        default:
+            return false;
+    }
+}
+
+// Runs whenever there is a layer state change.
+layer_state_t layer_state_set_user(layer_state_t  state) {
+    enum layers cur_layer = get_highest_layer(state);
+
+    switch (cur_layer)
+    {
+    case GAME:
+        autoshift_disable();
+        break;
+
+    default:
+        autoshift_enable();
+        break;
+    }
+
+    // Don't delete! This is what updates layers!
+    return state;
 }
