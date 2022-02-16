@@ -576,6 +576,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     _last_input_time = timer_read32();
     oled_on();
 
+    // AKA, continue processing the key (it wasn't absorbed).
     return true;
 }
 
@@ -592,7 +593,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case HOME_S:
         case HOME_E:
             // For some reason, typing words like "forward" is very difficult.
-            return TAPPING_TERM + 200;
+            return TAPPING_TERM + 100;
         case HOME_T:
         case HOME_N:
             // But it seems that shift happens pretty quickly
@@ -612,14 +613,18 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
         // This is on for all chords involving this key.
         case LT(NUM, KC_BSPC):
 
+#if 0
+        // Love the idea, can't figure out how to do this without
+        // accidentally hitting bigrams on the other half, like R-E.
+
         // Because I like this for full-word backspace (win + mac)
         // This is ONLY on for certain chords (backspace, copy/paste, etc).
-        // See process_record_user for a distinct list.
         case HOME_R:
         case HOME_S:
+#endif
             return true;
 
-        // Everything else is off by default.
+        // Everything else has permissive hold off by default.
         default:
             return false;
     }
