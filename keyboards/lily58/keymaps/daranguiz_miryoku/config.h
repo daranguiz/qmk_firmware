@@ -45,7 +45,8 @@
 // Dario-specific customization
 #define MIRYOKU_ALPHAS_COLEMAK
 
-#define PERMISSIVE_HOLD_PER_KEY
+// #define PERMISSIVE_HOLD_PER_KEY
+#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
 // https://thomasbaart.nl/2018/12/01/reducing-firmware-size-in-qmk/
 #define NO_ACTION_MACRO

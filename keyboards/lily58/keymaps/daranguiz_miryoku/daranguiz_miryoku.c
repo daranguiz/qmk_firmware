@@ -542,6 +542,11 @@ bool oled_task_user(void) {
 
 #endif
 
+// State tracking for the currently-held key, used for dynamic permissive hold
+// This is racy as hell.
+volatile static bool _is_backspace_pressed = false;
+volatile static bool _is_delete_pressed = false;
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         /* KEYBOARD PET STATUS START */
@@ -572,8 +577,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         /* KEYBOARD PET STATUS END */
     }
 
+    // Dynamic permissive hold things
+    switch (keycode) {
+        case LT(NUM, KC_BSPC):
+            _is_backspace_pressed = (record->event.pressed && record->tap.count > 0);
+            break;
+        case LT(FUN, KC_DEL):
+            _is_delete_pressed = (record->event.pressed && record->tap.count > 0);
+            break;
+        default:
+            break;
+    }
+
     // For oled management
-    _last_input_time = timer_read32();
     oled_on();
 
     // AKA, continue processing the key (it wasn't absorbed).
@@ -607,22 +623,18 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
  * Per-key permissive hold settings.
  * Really only enabled for a few keys on the left hand (to support 1H key chords)
  */
-bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // Because I'll often quick-tap symbols like '-'
         // This is on for all chords involving this key.
         case LT(NUM, KC_BSPC):
-
-#if 0
-        // Love the idea, can't figure out how to do this without
-        // accidentally hitting bigrams on the other half, like R-E.
+            return true;
 
         // Because I like this for full-word backspace (win + mac)
-        // This is ONLY on for certain chords (backspace, copy/paste, etc).
-        case HOME_R:
-        case HOME_S:
-#endif
-            return true;
+        // This is ONLY on for certain chords (backspace and delete right now, ZXCV in future?).
+        // case HOME_R:
+        // case HOME_S:
+        //     return (_is_backspace_pressed || _is_delete_pressed);
 
         // Everything else has permissive hold off by default.
         default:
