@@ -607,12 +607,10 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case HOME_O:
         case HOME_S:
         case HOME_E:
-            // For some reason, typing words like "forward" is very difficult.
-            return TAPPING_TERM + 100;
         case HOME_T:
         case HOME_N:
             // Leaving this split out separately. With permissive hold on, this is generally not needed.
-            return TAPPING_TERM + 100;
+            return TAPPING_TERM_HRM;
         default:
             return TAPPING_TERM;
     }

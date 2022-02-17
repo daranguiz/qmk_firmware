@@ -13,8 +13,11 @@
 #define TAPPING_TERM 200
 #define TAPPING_TERM_PER_KEY
 
+// Dario macro, not a QMK thing
+#define TAPPING_TERM_HRM (TAPPING_TERM + 100)
+
 // Not actually implemented yet :(
-// #define BILATERAL_COMBINATIONS 300
+#define BILATERAL_COMBINATIONS TAPPING_TERM_HRM
 
 // Prevent normal rollover on alphas from accidentally triggering mods.
 #define IGNORE_MOD_TAP_INTERRUPT
