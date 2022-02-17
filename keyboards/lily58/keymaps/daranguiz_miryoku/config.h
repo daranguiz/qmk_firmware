@@ -14,7 +14,7 @@
 #define TAPPING_TERM_PER_KEY
 
 // Not actually implemented yet :(
-#define BILATERAL_COMBINATIONS 300
+// #define BILATERAL_COMBINATIONS 300
 
 // Prevent normal rollover on alphas from accidentally triggering mods.
 #define IGNORE_MOD_TAP_INTERRUPT
@@ -45,13 +45,14 @@
 // Dario-specific customization
 #define MIRYOKU_ALPHAS_COLEMAK
 
-// #define PERMISSIVE_HOLD_PER_KEY
+#define PERMISSIVE_HOLD_PER_KEY
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
 // https://thomasbaart.nl/2018/12/01/reducing-firmware-size-in-qmk/
 #define NO_ACTION_MACRO
 #define NO_ACTION_FUNCTION
 
+#define TAP_HOLD_CAPS_DELAY 0   // special handling for macOS, maybe?
 
 //////////////////////// - Keyboard layout
 

@@ -577,19 +577,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         /* KEYBOARD PET STATUS END */
     }
 
-    // Dynamic permissive hold things
-    switch (keycode) {
-        case LT(NUM, KC_BSPC):
-            _is_backspace_pressed = (record->event.pressed && record->tap.count > 0);
-            break;
-        case LT(FUN, KC_DEL):
-            _is_delete_pressed = (record->event.pressed && record->tap.count > 0);
-            break;
-        default:
-            break;
-    }
-
     // For oled management
+    _last_input_time = timer_read32();
     oled_on();
 
     // AKA, continue processing the key (it wasn't absorbed).
@@ -619,24 +608,46 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-/*
- * Per-key permissive hold settings.
- * Really only enabled for a few keys on the left hand (to support 1H key chords)
- */
+// Quick-tap for layers, to register keys on the tapping downstroke
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // Because I'll often quick-tap symbols like '-'
         // This is on for all chords involving this key.
+        case LT(SYM, KC_ENT):
         case LT(NUM, KC_BSPC):
             return true;
 
-        // Because I like this for full-word backspace (win + mac)
-        // This is ONLY on for certain chords (backspace and delete right now, ZXCV in future?).
-        // case HOME_R:
-        // case HOME_S:
-        //     return (_is_backspace_pressed || _is_delete_pressed);
-
         // Everything else has permissive hold off by default.
+        default:
+            return false;
+    }
+}
+
+// Quick-tap for modifier keys, to register keys on the tapping upstroke
+bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        // Trying shift (it's great!)
+        case HOME_T:
+        case HOME_N:
+            return true;
+
+        // What about all the other modifiers?...
+        // L hand
+        case HOME_A:
+        case HOME_R:
+        case HOME_S:
+        // R hand
+        case HOME_E:
+        case HOME_I:
+        case HOME_O:
+            return true;
+
+        // This would be nice to put on GET_HOLD_ON_OTHER_KEY_PRESS,
+        // but space is rolled too often for that. Put it on a standard
+        // permissive hold instead.
+        case LT(NAV, KC_SPC):
+            return true;
+
         default:
             return false;
     }

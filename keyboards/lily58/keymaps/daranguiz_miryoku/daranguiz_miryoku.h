@@ -47,7 +47,8 @@ enum layers { BASE, BUTTON, MEDIA, NAV, MOUSE, SYM, NUM, FUN, GAME };
 #define HOME_T LSFT_T(KC_T)
 
 // Right-hand home row mods
-#define HOME_N RSFT_T(KC_N)
-#define HOME_E RCTL_T(KC_E)
+// Yes, they are using L!
+#define HOME_N LSFT_T(KC_N)
+#define HOME_E LCTL_T(KC_E)
 #define HOME_I LALT_T(KC_I)
-#define HOME_O RGUI_T(KC_O)
+#define HOME_O LGUI_T(KC_O)
