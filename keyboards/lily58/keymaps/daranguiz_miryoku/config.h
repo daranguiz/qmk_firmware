@@ -54,6 +54,8 @@
 
 #define TAP_HOLD_CAPS_DELAY 0   // special handling for macOS, maybe?
 
+#define SPLIT_OLED_ENABLE
+
 //////////////////////// - Keyboard layout
 
 #define XXX KC_NO

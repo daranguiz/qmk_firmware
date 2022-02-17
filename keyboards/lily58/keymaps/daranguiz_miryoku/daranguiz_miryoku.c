@@ -528,7 +528,12 @@ bool oled_task_user(void) {
     /* KEYBOARD PET VARIABLES END */
 
     if (timer_elapsed32(_last_input_time) > OLED_TIMEOUT) {
-        oled_off();
+        if (is_keyboard_master()) {
+            // Let the primary half own the oled status.
+            // It will get transported to the other half with
+            // SPLIT_OLED_ENABLE defined.
+            oled_off();
+        }
     } else {
         if (is_keyboard_master()) {
             print_status_narrow();
@@ -579,7 +584,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     // For oled management
     _last_input_time = timer_read32();
-    oled_on();
+    if (is_keyboard_master()) {
+        // Let the primary half own the oled status.
+        // It will get transported to the other half with
+        // SPLIT_OLED_ENABLE defined.
+        oled_on();
+    }
 
     // AKA, continue processing the key (it wasn't absorbed).
     return true;
@@ -601,8 +611,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM + 100;
         case HOME_T:
         case HOME_N:
-            // But it seems that shift happens pretty quickly
-            return TAPPING_TERM - 30;
+            // Leaving this split out separately. With permissive hold on, this is generally not needed.
+            return TAPPING_TERM + 100;
         default:
             return TAPPING_TERM;
     }
@@ -615,7 +625,8 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
         // This is on for all chords involving this key.
         case LT(SYM, KC_ENT):
         case LT(NUM, KC_BSPC):
-            return true;
+            // Temp change, maybe keep?
+            return false;
 
         // Everything else has permissive hold off by default.
         default:
@@ -646,6 +657,11 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
         // but space is rolled too often for that. Put it on a standard
         // permissive hold instead.
         case LT(NAV, KC_SPC):
+            return true;
+
+        // I think these are sometimes rolled too.
+        case LT(SYM, KC_ENT):
+        case LT(NUM, KC_BSPC):
             return true;
 
         default:
