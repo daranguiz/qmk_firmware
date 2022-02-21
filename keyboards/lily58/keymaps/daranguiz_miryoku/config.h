@@ -17,7 +17,7 @@
 #define TAPPING_TERM_HRM (TAPPING_TERM + 100)
 
 // Note, only available on a branch / with the manna_harbour patch
-#define BILATERAL_COMBINATIONS
+#define BILATERAL_COMBINATIONS 300
 
 // Prevent normal rollover on alphas from accidentally triggering mods.
 #define IGNORE_MOD_TAP_INTERRUPT
@@ -58,6 +58,8 @@
 #define SPLIT_OLED_ENABLE
 
 //////////////////////// - Keyboard layout
+
+#define DARIO_THUMB_SHIFT
 
 #define XXX KC_NO
 

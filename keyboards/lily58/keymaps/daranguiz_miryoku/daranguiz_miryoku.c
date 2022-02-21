@@ -5,6 +5,7 @@
 // This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "daranguiz_miryoku.h"
+#include "config.h"
 #include <stdio.h>
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -122,10 +123,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     LT(BUTTON, KC_W),  ALGR_T(KC_X),      KC_C,              KC_V,              KC_B,              KC_N,              KC_COMM,           KC_DOT,            ALGR_T(KC_SLSH),   LT(BUTTON, KC_QUOT),
     U_NP,              U_NP,              LT(MEDIA, KC_ESC), LT(NAV, KC_SPC),   LT(MOUSE, KC_TAB), LT(SYM, KC_ENT),   LT(NUM, KC_BSPC),  LT(FUN, KC_DEL),   U_NP,              U_NP
   #elif defined MIRYOKU_ALPHAS_COLEMAK
+    #if defined DARIO_THUMB_SHIFT
+    KC_Q,              KC_W,              KC_F,              KC_P,              KC_G,              KC_J,              KC_L,              KC_U,              KC_Y,              KC_QUOT, TG(GAME),
+    LGUI_T(KC_A),      LALT_T(KC_R),      LCTL_T(KC_S),      LSFT_T(KC_T),      KC_D,              KC_H,              LSFT_T(KC_N),      LCTL_T(KC_E),      LALT_T(KC_I),      LGUI_T(KC_O),
+    LT(BUTTON, KC_Z),  LT(FUN, KC_X),     KC_C,              KC_V,              KC_B,              KC_K,              KC_M,              KC_COMM,           ALGR_T(KC_DOT),    LT(BUTTON, KC_SLSH),
+    U_NP,              U_NP,              LT(MEDIA, KC_ESC), LT(NAV, KC_SPC),   LT(MOUSE, KC_TAB), LSFT_T(KC_ENT),    LT(NUM, KC_BSPC),  LT(SYM, KC_DEL),   U_NP,              U_NP
+    #else
     KC_Q,              KC_W,              KC_F,              KC_P,              KC_G,              KC_J,              KC_L,              KC_U,              KC_Y,              KC_QUOT, TG(GAME),
     LGUI_T(KC_A),      LALT_T(KC_R),      LCTL_T(KC_S),      LSFT_T(KC_T),      KC_D,              KC_H,              LSFT_T(KC_N),      LCTL_T(KC_E),      LALT_T(KC_I),      LGUI_T(KC_O),
     LT(BUTTON, KC_Z),  ALGR_T(KC_X),      KC_C,              KC_V,              KC_B,              KC_K,              KC_M,              KC_COMM,           ALGR_T(KC_DOT),    LT(BUTTON, KC_SLSH),
     U_NP,              U_NP,              LT(MEDIA, KC_ESC), LT(NAV, KC_SPC),   LT(MOUSE, KC_TAB), LT(SYM, KC_ENT),   LT(NUM, KC_BSPC),  LT(FUN, KC_DEL),   U_NP,              U_NP
+    #endif
   #elif defined MIRYOKU_ALPHAS_COLEMAKDHK
     KC_Q,              KC_W,              KC_F,              KC_P,              KC_B,              KC_J,              KC_L,              KC_U,              KC_Y,              KC_QUOT,
     LGUI_T(KC_A),      LALT_T(KC_R),      LCTL_T(KC_S),      LSFT_T(KC_T),      KC_G,              KC_K,              LSFT_T(KC_N),      LCTL_T(KC_E),      LALT_T(KC_I),      LGUI_T(KC_O),
@@ -616,21 +624,20 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-// // Quick-tap for layers, to register keys on the tapping downstroke
-// bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
-//     switch (keycode) {
-//         // Because I'll often quick-tap symbols like '-'
-//         // This is on for all chords involving this key.
-//         case LT(SYM, KC_ENT):
-//         case LT(NUM, KC_BSPC):
-//             // Temp change, maybe keep?
-//             return false;
+#if defined DARIO_THUMB_SHIFT
+// Quick-tap for layers, to register keys on the tapping downstroke
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        // Specifically for shift rolling
+        case LSFT_T(KC_ENT):
+            return true;
 
-//         // Everything else has permissive hold off by default.
-//         default:
-//             return false;
-//     }
-// }
+        // Everything else has permissive hold off by default.
+        default:
+            return false;
+    }
+}
+#endif
 
 // Quick-tap for modifier keys, to register keys on the tapping upstroke
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
@@ -638,7 +645,11 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
         // Trying shift (it's great!)
         case HOME_T:
         case HOME_N:
-            return true;
+            #if defined DARIO_THUMB_SHIFT
+                return false;
+            #else
+                return true;
+            #endif
 
         // What about all the other modifiers?...
         // L hand
@@ -658,8 +669,9 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
             return true;
 
         // I think these are sometimes rolled too.
-        case LT(SYM, KC_ENT):
         case LT(NUM, KC_BSPC):
+        case LT(SYM, KC_ENT): // for standard layout
+        case LT(SYM, KC_DEL): // for thumb shift layout
             return true;
 
         default:

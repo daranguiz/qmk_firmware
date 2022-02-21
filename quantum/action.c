@@ -272,6 +272,13 @@ static bool bilateral_combinations_left(keypos_t key) {
 
 static void bilateral_combinations_hold(action_t action, keyevent_t event) {
     dprint("BILATERAL_COMBINATIONS: hold\n");
+
+    // Ignore LSFT_T(KC_ENT)
+    // See action_t docs
+    if (action.key.mods == MOD_LSFT && action.key.code == KC_ENT) {
+        return;
+    }
+
     bilateral_combinations.active = true;
     bilateral_combinations.code = action.key.code;
     bilateral_combinations.tap = action.layer_tap.code;
