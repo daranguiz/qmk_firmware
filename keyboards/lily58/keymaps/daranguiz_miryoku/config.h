@@ -16,7 +16,7 @@
 // Dario macro, not a QMK thing
 #define TAPPING_TERM_HRM (TAPPING_TERM + 100)
 
-// Not actually implemented yet :(
+// Note, only available on a branch / with the manna_harbour patch
 #define BILATERAL_COMBINATIONS
 
 // Prevent normal rollover on alphas from accidentally triggering mods.
@@ -54,8 +54,6 @@
 // https://thomasbaart.nl/2018/12/01/reducing-firmware-size-in-qmk/
 #define NO_ACTION_MACRO
 #define NO_ACTION_FUNCTION
-
-#define TAP_HOLD_CAPS_DELAY 0   // special handling for macOS, maybe?
 
 #define SPLIT_OLED_ENABLE
 

@@ -610,27 +610,27 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case HOME_T:
         case HOME_N:
             // Leaving this split out separately. With permissive hold on, this is generally not needed.
-            return TAPPING_TERM_HRM;
+            return TAPPING_TERM;
         default:
             return TAPPING_TERM;
     }
 }
 
-// Quick-tap for layers, to register keys on the tapping downstroke
-bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        // Because I'll often quick-tap symbols like '-'
-        // This is on for all chords involving this key.
-        case LT(SYM, KC_ENT):
-        case LT(NUM, KC_BSPC):
-            // Temp change, maybe keep?
-            return false;
+// // Quick-tap for layers, to register keys on the tapping downstroke
+// bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+//     switch (keycode) {
+//         // Because I'll often quick-tap symbols like '-'
+//         // This is on for all chords involving this key.
+//         case LT(SYM, KC_ENT):
+//         case LT(NUM, KC_BSPC):
+//             // Temp change, maybe keep?
+//             return false;
 
-        // Everything else has permissive hold off by default.
-        default:
-            return false;
-    }
-}
+//         // Everything else has permissive hold off by default.
+//         default:
+//             return false;
+//     }
+// }
 
 // Quick-tap for modifier keys, to register keys on the tapping upstroke
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
@@ -649,7 +649,7 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
         case HOME_E:
         case HOME_I:
         case HOME_O:
-            return true;
+            return false;
 
         // This would be nice to put on GET_HOLD_ON_OTHER_KEY_PRESS,
         // but space is rolled too often for that. Put it on a standard
