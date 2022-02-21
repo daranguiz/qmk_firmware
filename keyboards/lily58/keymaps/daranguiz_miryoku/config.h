@@ -17,7 +17,7 @@
 #define TAPPING_TERM_HRM (TAPPING_TERM + 100)
 
 // Not actually implemented yet :(
-#define BILATERAL_COMBINATIONS TAPPING_TERM_HRM
+#define BILATERAL_COMBINATIONS
 
 // Prevent normal rollover on alphas from accidentally triggering mods.
 #define IGNORE_MOD_TAP_INTERRUPT
