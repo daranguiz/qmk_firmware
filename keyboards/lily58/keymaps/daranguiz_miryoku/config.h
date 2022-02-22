@@ -45,8 +45,9 @@
 #undef MOUSEKEY_TIME_TO_MAX
 #define MOUSEKEY_TIME_TO_MAX    64
 
-// Dario-specific customization
+// Keymap customization
 #define MIRYOKU_ALPHAS_COLEMAK
+#define MIRYOKU_CLIPBOARD_MAC
 
 #define PERMISSIVE_HOLD_PER_KEY
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
