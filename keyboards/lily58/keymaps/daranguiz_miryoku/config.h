@@ -16,8 +16,8 @@
 // Dario macro, not a QMK thing
 #define TAPPING_TERM_HRM (TAPPING_TERM + 100)
 
-// Note, only available on a branch / with the manna_harbour patch
-#define BILATERAL_COMBINATIONS 300
+// Note, only available with the manna_harbour patch
+#define BILATERAL_COMBINATIONS TAPPING_TERM_HRM
 
 // Prevent normal rollover on alphas from accidentally triggering mods.
 #define IGNORE_MOD_TAP_INTERRUPT
