@@ -59,7 +59,7 @@
 
 //////////////////////// - Keyboard layout
 
-#define DARIO_THUMB_SHIFT
+// #define DARIO_THUMB_SHIFT
 
 #define XXX KC_NO
 

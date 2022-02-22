@@ -646,7 +646,7 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
         case HOME_T:
         case HOME_N:
             #if defined DARIO_THUMB_SHIFT
-                return false;
+                return true;
             #else
                 return true;
             #endif
