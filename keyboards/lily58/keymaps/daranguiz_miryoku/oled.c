@@ -1,6 +1,4 @@
 #include "oled.h"
-#include "daranguiz_miryoku.h"
-#include "config.h"
 
 #ifdef OLED_ENABLE
 
@@ -310,7 +308,7 @@ bool oled_task_user(void) {
 
 #endif
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+void process_record_user_oled(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         /* KEYBOARD PET STATUS START */
 
@@ -348,7 +346,4 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // SPLIT_OLED_ENABLE defined.
         oled_on();
     }
-
-    // AKA, continue processing the key (it wasn't absorbed).
-    return true;
 }

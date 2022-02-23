@@ -11,5 +11,5 @@ OLED_ENABLE = yes
 WPM_ENABLE = yes
 LTO_ENABLE = yes
 
-SRC += daranguiz_miryoku.c \
+SRC += mods.c \
        oled.c
