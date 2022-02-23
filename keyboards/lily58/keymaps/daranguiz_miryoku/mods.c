@@ -11,7 +11,7 @@
 #include <stdio.h>
 
 // Our combo
-const uint16_t PROGMEM caps_combo[] = { HOME_T, HOME_N, COMBO_END };
+const uint16_t PROGMEM caps_combo[] = { KC_V, KC_M, COMBO_END };
 
 // Boilerplate, required for QMK
 uint16_t COMBO_LEN = COMBO_LENGTH;

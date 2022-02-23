@@ -270,7 +270,7 @@ static void print_status_narrow(void) {
 
     oled_set_cursor(0,4);
     if (is_caps_word) {
-        oled_write("(cw) ", false);
+        oled_write("*word", false);
     } else {
         oled_write("     ", false);
     }
