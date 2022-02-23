@@ -7,7 +7,29 @@
 #include "keymap_config.h"
 #include "config.h"
 #include "oled.h"
+#include "features/caps_word.h"
 #include <stdio.h>
+
+// Our combo
+const uint16_t PROGMEM caps_combo[] = { HOME_T, HOME_N, COMBO_END };
+
+// Boilerplate, required for QMK
+uint16_t COMBO_LEN = COMBO_LENGTH;
+combo_t key_combos[] = {
+    [CAPS_COMBO] = COMBO_ACTION(caps_combo),
+};
+
+void process_combo_event(uint16_t combo_index, bool pressed) {
+    switch (combo_index) {
+        case CAPS_COMBO:
+            if (pressed) {
+                caps_word_set(true);
+            }
+            break;
+        default:
+            break;
+    }
+}
 
 /*
  * Per key tapping term settings
@@ -107,8 +129,13 @@ layer_state_t layer_state_set_user(layer_state_t  state) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    // in oled.c
+    // in oled.c, for luna
     process_record_user_oled(keycode, record);
+
+    // in features/caps_word.c
+    if (!process_caps_word(keycode, record)) {
+        return false;
+    }
 
     // AKA, continue processing the key (it wasn't absorbed).
     return true;

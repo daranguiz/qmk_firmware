@@ -1,4 +1,5 @@
 #include "oled.h"
+#include "features/caps_word.h"
 
 #ifdef OLED_ENABLE
 
@@ -259,10 +260,18 @@ static void print_status_narrow(void) {
     /* caps lock */
     oled_set_cursor(0,3);
 
-    if (led_usb_state.caps_lock) {
+    bool is_caps_word = caps_word_get();
+    if (led_usb_state.caps_lock || is_caps_word) {
         oled_write("CAPS!", false);
     } else {
         // Need to clear :(
+        oled_write("     ", false);
+    }
+
+    oled_set_cursor(0,4);
+    if (is_caps_word) {
+        oled_write("(cw) ", false);
+    } else {
         oled_write("     ", false);
     }
 

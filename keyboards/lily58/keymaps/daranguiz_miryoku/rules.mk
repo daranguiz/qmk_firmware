@@ -9,7 +9,9 @@ SPLIT_KEYBOARD = yes
 
 OLED_ENABLE = yes
 WPM_ENABLE = yes
+COMBO_ENABLE = yes
 LTO_ENABLE = yes
 
-SRC += mods.c \
-       oled.c
+SRC += ./mods.c \
+       ./oled.c \
+       ./features/caps_word.c 
