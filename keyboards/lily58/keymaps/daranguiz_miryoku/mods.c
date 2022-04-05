@@ -54,11 +54,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 // Quick-tap for layers, to register keys on the tapping downstroke
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-#if defined DARIO_THUMB_SHIFT
-        // Specifically for shift rolling
-        case LSFT_T(KC_ENT):
-            return true;
-#endif
         // Everything else has permissive hold off by default.
         default:
             return false;
@@ -68,14 +63,8 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 // Quick-tap for modifier keys, to register keys on the tapping upstroke
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // Shift mods, always permissive hold!
         case HOME_T:
         case HOME_N:
-#if defined DARIO_THUMB_SHIFT
-                return true;
-#else
-                return true;
-#endif
 
         // Other modifiers, no bueno. 
         // L hand

@@ -275,7 +275,7 @@ static void bilateral_combinations_hold(action_t action, keyevent_t event) {
 
     // Ignore LSFT_T(KC_ENT)
     // See action_t docs
-    if (action.key.mods == MOD_LSFT && action.key.code == KC_ENT) {
+    if (action.key.code == KC_LSFT) {
         return;
     }
 
