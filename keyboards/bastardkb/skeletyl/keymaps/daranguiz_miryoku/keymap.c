@@ -8,7 +8,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_Q,              KC_W,              KC_F,              KC_P,              KC_G,              KC_J,              KC_L,              KC_U,              KC_Y,              KC_QUOT,
     LGUI_T(KC_A),      LALT_T(KC_R),      LCTL_T(KC_S),      LSFT_T(KC_T),      KC_D,              KC_H,              LSFT_T(KC_N),      LCTL_T(KC_E),      LALT_T(KC_I),      LGUI_T(KC_O),
     LT(BUTTON, KC_Z),  LT(FUN, KC_X),     KC_C,              KC_V,              KC_B,              KC_K,              KC_M,              KC_COMM,           ALGR_T(KC_DOT),    LT(BUTTON, KC_SLSH),
-    LT(MEDIA, KC_TAB), LT(NAV, KC_SPC),   KC_ENT,            KC_LSFT,    LT(NUM, KC_BSPC),  LT(SYM, KC_DEL)
+    KC_ENT, LT(NAV, KC_SPC),  LT(MEDIA, KC_TAB),             LT(SYM, KC_DEL), KC_LSFT,    LT(NUM, KC_BSPC)
 #else /* default */
     KC_Q,              KC_W,              KC_F,              KC_P,              KC_G,              KC_J,              KC_L,              KC_U,              KC_Y,              KC_QUOT,
     LGUI_T(KC_A),      LALT_T(KC_R),      LCTL_T(KC_S),      LSFT_T(KC_T),      KC_D,              KC_H,              LSFT_T(KC_N),      LCTL_T(KC_E),      LALT_T(KC_I),      LGUI_T(KC_O),
@@ -20,7 +20,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     RESET,   U_NA,    U_NA,    U_NA,    U_NA,    U_RDO,   U_PST,   U_CPY,   U_CUT,   U_UND,
     KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, U_NA,    KC_CAPS, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT,
     U_UND,   U_CUT,   U_CPY,   U_PST,   U_NA,    KC_INS,  KC_HOME, KC_PGDN, KC_PGUP, KC_END,
-    U_NA,    U_NA,    U_NA,    KC_ENT,  KC_BSPC, KC_DEL
+    U_NA,    U_NA,    U_NA,    KC_DEL,  KC_ENT,  KC_BSPC
   ),
   [MOUSE] = LAYOUT_split_3x5_3(
     RESET,   U_NA,    U_NA,    U_NA,    U_NA,    U_RDO,   U_PST,   U_CPY,   U_CUT,   U_UND,
