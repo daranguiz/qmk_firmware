@@ -1,3 +1,19 @@
+# Copyright 2019 Manna Harbour
+# https://github.com/manna-harbour/miryoku
+# generated -*- buffer-read-only: t -*-
+
+MOUSEKEY_ENABLE = yes # Mouse keys
+EXTRAKEY_ENABLE = yes # Audio control and System control
+AUTO_SHIFT_ENABLE = yes # Auto Shift
+SPLIT_KEYBOARD = yes
+
+COMBO_ENABLE = yes
+LTO_ENABLE = yes
+
+SRC += ./mods.c \
+       ./features/caps_word.c
+
+
 # MCU name
 MCU = atmega32u4
 
@@ -26,3 +42,4 @@ RGB_MATRIX_SUPPORTED = no
 RGBLIGHT_SUPPORTED = no
 
 LAYOUTS = split_3x5_3
+

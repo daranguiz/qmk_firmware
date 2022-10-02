@@ -41,7 +41,9 @@
 #define SOFT_SERIAL_PIN D0
 
 #define USB_POLLING_INTERVAL_MS 1
-#define MASTER_RIGHT
+#define MASTER_LEFT
+
+#define IGNORE_MOD_TAP_INTERRUPT
 
 // RGB matrix support
 #ifdef RGB_MATRIX_ENABLE
