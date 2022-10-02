@@ -1,5 +1,5 @@
 #include "keymap_config.h"
-#include "personal_config.h"
+#include "config.h"
 #include <stdio.h>
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
