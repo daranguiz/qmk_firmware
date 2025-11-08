@@ -14,11 +14,10 @@ SRC += ./mods.c
 # TODO: Re-enable caps_word after build is working
 # SRC += ./features/caps_word.c
 
-
-# MCU name
+# MCU name (Elite-C uses ATmega32U4)
 MCU = atmega32u4
 
-# Bootloader selection
+# Bootloader selection (Elite-C uses atmel-dfu)
 BOOTLOADER = atmel-dfu
 
 # Build Options

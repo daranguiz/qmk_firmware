@@ -20,14 +20,15 @@
 - **Features**: OLED, WPM display, split keyboard, miryoku layout, chordal hold
 - **Last Updated**: 2025-11-07
 
-### Bastard Keyboards Skeletyl
+### Bastard Keyboards Skeletyl (Elite-C)
 - **Path**: keyboards/bastardkb/skeletyl/keymaps/daranguiz_miryoku/
-- **Hardware**: Skeletyl (36-key) with Pro Micro
+- **Hardware**: Elite-C (Pro Micro compatible, ATmega32U4)
 - **Keys**: 36 keys (split 3x5+3 layout)
 - **Build**: `make bastardkb/skeletyl/promicro:daranguiz_miryoku`
-- **Status**: Active (migrated from lily58 branch)
+- **Status**: Active (migrated from lily58/miryoku-bilateral-combinations branch)
 - **Features**: Split keyboard, miryoku layout, chordal hold
 - **Last Updated**: 2025-11-07
+- **Notes**: Uses Elite-C controller (Pro Micro pinout with USB-C, ATmega32U4)
 
 ---
 

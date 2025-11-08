@@ -81,8 +81,8 @@
 - [X] T023 [P] [US2] Review keyboards/lily58/keymaps/daranguiz_miryoku/mods.c for bilateral combinations dependencies (Disabled combos/caps_word temporarily)
 - [X] T024 [P] [US2] Review keyboards/bastardkb/skeletyl/keymaps/daranguiz_miryoku/mods.c for bilateral combinations dependencies (Disabled combos/caps_word temporarily)
 - [X] T025 [P] [US2] Build test Lulu keymap: make clean && make boardsource/lulu/rp2040:dario ✅ SUCCESS
-- [ ] T026 [P] [US2] Build test Lily58 keymap: make lily58:daranguiz_miryoku (Needs deprecated keycode updates)
-- [ ] T027 [P] [US2] Build test Skeletyl keymap: make bastardkb/skeletyl:daranguiz_miryoku (Needs deprecated keycode updates)
+- [X] T026 [P] [US2] Build test Lily58 keymap: make lily58:daranguiz_miryoku ✅ SUCCESS
+- [X] T027 [P] [US2] Build test Skeletyl keymap: make bastardkb/skeletyl/promicro:daranguiz_miryoku ✅ SUCCESS (Hardware: Elite-C with ATmega32U4)
 - [ ] T028 [US2] Flash firmware to available keyboards and perform functional testing per contracts/chordal-hold-migration.md (TEST-1 through TEST-4)
 - [ ] T029 [US2] Document any behavioral differences between bilateral combinations and chordal hold
 
@@ -98,8 +98,8 @@
 
 ### Implementation for User Story 3
 
-- [ ] T030 [US3] Create KEYBOARDS.md inventory file at repository root per constitution Principle IV
-- [ ] T031 [US3] Verify all personal customizations are present on personal branch (keymaps, build scripts, users/ directory if exists)
+- [X] T030 [US3] Create KEYBOARDS.md inventory file at repository root per constitution Principle IV ✅ COMPLETE
+- [X] T031 [US3] Verify all personal customizations are present on personal branch (keymaps, build scripts, users/ directory if exists) ✅ VERIFIED: 3 keymaps, build_lulu.sh, KEYBOARDS.md
 - [ ] T032 [US3] Stage all changes on personal branch: git add -A
 - [ ] T033 [US3] Create consolidated commit with descriptive message documenting migration and consolidation
 - [ ] T034 [US3] Verify consolidated commit on personal branch: git log master..personal
