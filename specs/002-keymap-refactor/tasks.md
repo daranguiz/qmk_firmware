@@ -3,23 +3,17 @@
 **Input**: Design documents from `/specs/002-keymap-refactor/`
 **Prerequisites**: plan.md, spec.md, research.md, data-model.md, contracts/file-structure.md
 
-**Tests**: Not requested in specification - manual compilation and firmware testing only
+**Tests**: Tests are NOT included per feature specification. Manual compilation and firmware flashing tests only.
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
-## Format: `[ID] [P?] [Story] Description`
+**Reference Implementation**: Lulu (`keyboards/boardsource/lulu/keymaps/dario/keymap.c`) and Skeletyl (`keyboards/bastardkb/skeletyl/keymaps/daranguiz_miryoku/keymap.c`) have been confirmed to use **identical 3x5+3 layouts** across all 8 layers (BASE, NAV, MOUSE, MEDIA, NUM, SYM, FUN, BUTTON). This confirmed keymap will be extracted as the shared base layout in `users/dario/layers.h`.
+
+## Format: `[ID] [P?] [Story?] Description`
 
 - **[P]**: Can run in parallel (different files, no dependencies)
-- **[Story]**: Which user story this task belongs to (e.g., US1, US4, US5, US2, US3)
+- **[Story]**: Which user story this task belongs to (e.g., US1, US2, US3, US4, US5)
 - Include exact file paths in descriptions
-
-## Path Conventions
-
-- **QMK Firmware**: Embedded project with firmware at repository root
-- **Shared code**: `users/dario/`
-- **Keyboard keymaps**: `keyboards/<manufacturer>/<model>/keymaps/dario/`
-- **Documentation**: `docs/keymaps/`, `KEYBOARDS.md`
-- **Build scripts**: Repository root
 
 ---
 
@@ -47,21 +41,23 @@
 
 **⚠️ CRITICAL**: No keyboard migration can begin until this phase is complete
 
-- [ ] T008 Define home row mod aliases in users/dario/dario.h (HOME_A, HOME_R, HOME_S, HOME_T, HOME_N, HOME_E, HOME_I, HOME_O)
-- [ ] T009 Define all custom keycodes in users/dario/dario.h (U_NA, U_NU, U_UND, U_CUT, U_CPY, U_PST, U_RDO)
-- [ ] T010 Implement custom keycode handlers in users/dario/dario.c (process_record_user with switch cases for U_UND, U_CUT, U_CPY, U_PST, U_RDO)
-- [ ] T011 Update users/dario/rules.mk to add dario.c to SRC
-- [ ] T012 Create users/dario/layers.h and define LAYER_BASE with 36 keycodes using home row mods
-- [ ] T013 Define LAYER_NAV in users/dario/layers.h (navigation layer with arrow keys, home/end, undo/redo)
-- [ ] T014 [P] Define LAYER_MOUSE in users/dario/layers.h (mouse movement and click keys)
-- [ ] T015 [P] Define LAYER_MEDIA in users/dario/layers.h (media controls, brightness, volume)
-- [ ] T016 [P] Define LAYER_NUM in users/dario/layers.h (numpad layout)
-- [ ] T017 [P] Define LAYER_SYM in users/dario/layers.h (symbols and punctuation)
-- [ ] T018 [P] Define LAYER_FUN in users/dario/layers.h (function keys F1-F12)
-- [ ] T019 [P] Define LAYER_BUTTON in users/dario/layers.h (button layer if used)
+**Reference Source**: Extract layer definitions from `keyboards/boardsource/lulu/keymaps/dario/keymap.c` lines 6-54 (confirmed identical to Skeletyl)
+
+- [ ] T008 Define all custom keycodes in users/dario/dario.h (U_NA, U_NU, U_UND, U_CUT, U_CPY, U_PST, U_RDO, MS_*, RM_*)
+- [ ] T009 Implement custom keycode handlers in users/dario/dario.c (process_record_user with switch cases for U_UND, U_CUT, U_CPY, U_PST, U_RDO if needed)
+- [ ] T010 Update users/dario/rules.mk to add dario.c to SRC
+- [ ] T011 Extract LAYER_BASE from keyboards/boardsource/lulu/keymaps/dario/keymap.c (lines 7-10) into users/dario/layers.h as LAYER_BASE macro with 36 keycodes
+- [ ] T012 Extract LAYER_NAV from keyboards/boardsource/lulu/keymaps/dario/keymap.c (lines 13-16) into users/dario/layers.h
+- [ ] T013 [P] Extract LAYER_MOUSE from keyboards/boardsource/lulu/keymaps/dario/keymap.c (lines 19-22) into users/dario/layers.h
+- [ ] T014 [P] Extract LAYER_MEDIA from keyboards/boardsource/lulu/keymaps/dario/keymap.c (lines 25-28) into users/dario/layers.h
+- [ ] T015 [P] Extract LAYER_NUM from keyboards/boardsource/lulu/keymaps/dario/keymap.c (lines 31-34) into users/dario/layers.h
+- [ ] T016 [P] Extract LAYER_SYM from keyboards/boardsource/lulu/keymaps/dario/keymap.c (lines 37-40) into users/dario/layers.h
+- [ ] T017 [P] Extract LAYER_FUN from keyboards/boardsource/lulu/keymaps/dario/keymap.c (lines 43-46) into users/dario/layers.h
+- [ ] T018 [P] Extract LAYER_BUTTON from keyboards/boardsource/lulu/keymaps/dario/keymap.c (lines 49-52) into users/dario/layers.h
+- [ ] T019 Add header guards and includes to users/dario/layers.h (#ifndef USERSPACE_LAYERS_H, #include "dario.h")
 - [ ] T020 Compile test build with any existing keyboard to verify userspace compiles successfully
 
-**Checkpoint**: Foundation ready - keyboard migration can now begin in parallel
+**Checkpoint**: Foundation ready - all 8 layers extracted from confirmed identical keymap - keyboard migration can now begin
 
 ---
 
@@ -76,13 +72,13 @@
 ### Lily58 Naming Migration
 
 - [ ] T021 [US5] Rename keyboards/lily58/keymaps/daranguiz_miryoku/ to keyboards/lily58/keymaps/dario/
-- [ ] T022 [US5] Update USER_NAME in keyboards/lily58/keymaps/dario/rules.mk to "dario"
+- [ ] T022 [US5] Update USER_NAME in keyboards/lily58/keymaps/dario/rules.mk to "dario" if not already set
 - [ ] T023 [US5] Verify build command works: make lily58/rev1:dario
 
 ### Skeletyl Naming Migration
 
 - [ ] T024 [US5] Rename keyboards/bastardkb/skeletyl/keymaps/daranguiz_miryoku/ to keyboards/bastardkb/skeletyl/keymaps/dario/
-- [ ] T025 [US5] Update USER_NAME in keyboards/bastardkb/skeletyl/keymaps/dario/rules.mk to "dario"
+- [ ] T025 [US5] Update USER_NAME in keyboards/bastardkb/skeletyl/keymaps/dario/rules.mk to "dario" if not already set
 - [ ] T026 [US5] Verify build command works: make bastardkb/skeletyl/promicro:dario
 
 ### Lulu Already Correct
@@ -106,11 +102,11 @@
 
 ---
 
-## Phase 4: User Story 4 - Code Cleanup and Maintainability (Priority: P1)
+## Phase 4: User Story 4 - Code Cleanup (Priority: P1)
 
 **Goal**: Remove all legacy experimental code, dead code, and redundant configurations
 
-**Independent Test**: Review codebase for commented-out code, unused feature flags, old experiment references - verify none exist
+**Independent Test**: Review codebase for commented-out code, unused flags, old experiment references - verify none exist
 
 **Why US4 Before US1**: Clean code is essential before implementing the modular system to avoid bugs from dead code and to have clear starting point.
 
@@ -151,11 +147,13 @@
 
 ## Phase 5: User Story 1 - Modular Base Layout Management (Priority: P1) 🎯 MVP
 
-**Goal**: Establish single source of truth for core 3x5_3 layout shared across all keyboards
+**Goal**: Establish single source of truth for core 3x5+3 layout shared across all keyboards
 
 **Independent Test**: Modify LAYER_BASE in users/dario/layers.h once, compile all keyboards, verify identical base layer behavior
 
 **Why US1 After US4/US5**: This is the foundational modular system that requires clean, consistently-named keymaps.
+
+**Reference**: All 8 layers already extracted in Phase 2 from confirmed identical Lulu/Skeletyl keymaps
 
 ### Skeletyl Migration (36-key native)
 
@@ -297,7 +295,7 @@
 - [ ] T117 [P] Create or update keyboards/boardsource/lulu/keymaps/dario/README.md with features, build commands, and layer descriptions
 - [ ] T118 [P] Create or update keyboards/lily58/keymaps/dario/README.md with features, build commands, and layer descriptions
 - [ ] T119 [P] Create or update keyboards/bastardkb/skeletyl/keymaps/dario/README.md with features, build commands, and layer descriptions
-- [ ] T120 [P] Add comments to users/dario/layers.h explaining the layout philosophy and GACS pattern
+- [ ] T120 [P] Add comments to users/dario/layers.h explaining the layout philosophy and home row mods pattern
 - [ ] T121 Verify all build scripts work correctly (./build_lulu.sh, ./build_lily58.sh, ./build_skeletyl.sh)
 - [ ] T122 Create a master build script that builds all three keyboards in sequence
 - [ ] T123 Test compilation time and verify it's within 10% of baseline (per performance goal)
@@ -360,7 +358,7 @@
 ### Parallel Opportunities
 
 - **Phase 1**: T003, T004, T005, T006 can run in parallel
-- **Phase 2**: T014-T019 (all layer definitions except BASE and NAV) can run in parallel
+- **Phase 2**: T013-T018 (all layer definitions except BASE and NAV) can run in parallel after T011-T012
 - **Phase 3 (US5)**: T021-T023 (Lily58), T024-T026 (Skeletyl), T027-T028 (Lulu) can run in parallel; T029-T031 (build scripts) can run in parallel
 - **Phase 4 (US4)**: T035-T038 (Lulu), T039-T042 (Lily58), T043-T046 (Skeletyl), T047-T048 (userspace) can run in parallel
 - **Phase 5 (US1)**: Skeletyl migration (T051-T056), Lulu migration (T057-T063), Lily58 migration (T064-T070) can run in parallel AFTER each completes wrapper macro step
@@ -398,7 +396,7 @@ Task: "Test build: make lily58/rev1:dario"
 ### MVP First (User Stories 5 + 4 + 1 Only)
 
 1. Complete Phase 1: Setup
-2. Complete Phase 2: Foundational (CRITICAL - blocks all stories)
+2. Complete Phase 2: Foundational (CRITICAL - blocks all stories, extracts confirmed identical layers)
 3. Complete Phase 3: User Story 5 (Naming)
 4. Complete Phase 4: User Story 4 (Cleanup)
 5. Complete Phase 5: User Story 1 (Modular Base Layout)
@@ -409,7 +407,7 @@ This gives you the core value: single source of truth for layout across all keyb
 
 ### Incremental Delivery
 
-1. Complete Setup + Foundational → Foundation ready
+1. Complete Setup + Foundational → Foundation ready (8 layers extracted from confirmed identical keymaps)
 2. Add User Story 5 → Naming consistent
 3. Add User Story 4 → Code clean
 4. Add User Story 1 → Modular system working (MVP!)
@@ -423,7 +421,7 @@ Each story adds value without breaking previous stories.
 
 Given this is a solo project with embedded firmware (less parallelizable than web services):
 
-1. **Phase 1-2**: Setup and Foundational (required)
+1. **Phase 1-2**: Setup and Foundational (required, extracts 8 layers)
 2. **Phase 3**: US5 Naming (all keyboards sequentially)
 3. **Phase 4**: US4 Cleanup (all keyboards sequentially)
 4. **Phase 5**: US1 Modular Base (Skeletyl → Lulu → Lily58 sequentially, test each)
@@ -435,6 +433,8 @@ Given this is a solo project with embedded firmware (less parallelizable than we
 
 ## Notes
 
+- **Reference keymap**: keyboards/boardsource/lulu/keymaps/dario/keymap.c and keyboards/bastardkb/skeletyl/keymaps/daranguiz_miryoku/keymap.c confirmed identical across all 8 layers
+- All 8 layers extracted in Phase 2: BASE, NAV, MOUSE, MEDIA, NUM, SYM, FUN, BUTTON
 - [P] tasks = different files, no dependencies
 - [Story] label maps task to specific user story for traceability
 - Each user story should be independently completable and testable
@@ -454,7 +454,7 @@ Given this is a solo project with embedded firmware (less parallelizable than we
 
 **Task Count by User Story**:
 - Phase 1 (Setup): 7 tasks
-- Phase 2 (Foundational): 13 tasks
+- Phase 2 (Foundational): 13 tasks (extracts all 8 confirmed identical layers)
 - Phase 3 (US5 - Naming): 14 tasks
 - Phase 4 (US4 - Cleanup): 16 tasks
 - Phase 5 (US1 - Modular Base): 23 tasks
@@ -476,13 +476,13 @@ Given this is a solo project with embedded firmware (less parallelizable than we
 
 **Suggested MVP Scope**:
 - Phase 1: Setup (7 tasks)
-- Phase 2: Foundational (13 tasks)
+- Phase 2: Foundational (13 tasks) - **Extracts confirmed identical layers**
 - Phase 3: US5 Naming (14 tasks)
 - Phase 4: US4 Cleanup (16 tasks)
 - Phase 5: US1 Modular Base (23 tasks)
 - **Total MVP**: 73 tasks
 
-After MVP, you have a working modular keymap system with single source of truth. US2 (hardware features) and US3 (visualization) are valuable but not critical for core functionality.
+After MVP, you have a working modular keymap system with single source of truth based on the confirmed identical Lulu/Skeletyl layouts. US2 (hardware features) and US3 (visualization) are valuable but not critical for core functionality.
 
 **Format Validation**: ✅ All 127 tasks follow strict checklist format:
 - Checkbox: `- [ ]`
@@ -490,3 +490,5 @@ After MVP, you have a working modular keymap system with single source of truth.
 - [P] marker: 34 tasks marked as parallelizable
 - [Story] label: 94 tasks have user story labels (US1, US2, US3, US4, US5)
 - Description: All include clear actions with file paths
+
+**Key Update**: Phase 2 (Foundational) now explicitly references extracting layers from the confirmed identical Lulu/Skeletyl keymaps as validated by the user.
