@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Repository Information
+
+**Primary Branch**: `personal` (this is the main branch for this fork, not `master`)
+
 ## QMK Firmware Overview
 
 This is a keyboard firmware based on the TMK keyboard firmware. QMK supports 840+ keyboards including the OLKB product line, ErgoDox EZ, Clueboard, and many community keyboards.
