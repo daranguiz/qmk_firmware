@@ -46,6 +46,12 @@
 #undef MOUSEKEY_TIME_TO_MAX
 #define MOUSEKEY_TIME_TO_MAX    64
 
+// Bootmagic: Hold the upper-left key at power on to enter bootloader
+// This allows entering bootloader without opening the keyboard or pressing BOOTSEL
+// Row 0, Column 0 corresponds to the upper-left key on the physical Lulu
+#define BOOTMAGIC_ROW 0
+#define BOOTMAGIC_COLUMN 0
+
 // Keymap customization
 #define MIRYOKU_ALPHAS_COLEMAK
 #define MIRYOKU_CLIPBOARD_MAC
