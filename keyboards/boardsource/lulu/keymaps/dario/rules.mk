@@ -1,3 +1,6 @@
+# Userspace configuration
+USER_NAME := dario
+
 BOOTMAGIC_ENABLE = yes       # Enable Bootmagic Lite
 OLED_ENABLE = yes
 SPLIT_KEYBOARD = yes

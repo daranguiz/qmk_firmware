@@ -1,6 +1,5 @@
-# Copyright 2019 Manna Harbour
-# https://github.com/manna-harbour/miryoku
-# generated -*- buffer-read-only: t -*-
+# Userspace configuration
+USER_NAME := dario
 
 MOUSEKEY_ENABLE = yes # Mouse keys
 EXTRAKEY_ENABLE = yes # Audio control and System control

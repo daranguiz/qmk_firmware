@@ -373,6 +373,71 @@ make bastardkb/skeletyl:dario
 
 ---
 
+## Decision 3: Per-Layer Extra Keys Strategy (2025-11-09)
+
+### Question
+
+How should wrapper macros handle keyboards with extra keys (like Lulu's 58-key layout) when different layers need different extra key configurations?
+
+**Context**: Most layers will use the core 36-key layout with extras as `KC_NO`, but some layers (like a future gaming layer) may want to populate the number row and outer columns with real keycodes.
+
+### Options Evaluated
+
+#### Option 1: Layer-Specific Wrappers ✅ SELECTED
+
+Define multiple wrapper macros for different use cases:
+
+```c
+// Standard wrapper: all extras are KC_NO
+#define LAYOUT_split_3x5_3(K00, K01, ...) LAYOUT(XXX, XXX, ..., K00, K01, ...)
+
+// Gaming wrapper: number row + outer columns populated
+#define LAYOUT_split_3x5_3_WITH_NUMROW(K00, K01, ...) LAYOUT(KC_1, KC_2, ..., K00, K01, ...)
+```
+
+**Usage**:
+```c
+[NAV]    = LAYOUT_split_3x5_3(LAYER_NAV),           // Standard
+[GAMING] = LAYOUT_split_3x5_3_WITH_NUMROW(LAYER_GAMING),  // With extras
+```
+
+**Pros**:
+- ✅ Self-documenting: wrapper name indicates what extras are active
+- ✅ Clean separation: most layers use standard wrapper
+- ✅ Easy to add new wrapper types for different extra key patterns
+- ✅ Maintains single source of truth for core 36 keys
+
+**Cons**:
+- ❌ Need to define multiple wrappers (but only as needed)
+
+#### Option 2: Parameterized Wrapper with Extra Key Arguments
+
+Single wrapper accepting both core keys and explicit extra key parameters.
+
+**Verdict**: ❌ Rejected - Too verbose when using extras (20+ additional parameters), error-prone
+
+#### Option 3: Separate Local Layer Definitions
+
+Keep shared layers pure, define full Lulu-specific layers locally.
+
+**Verdict**: ❌ Rejected - Violates DRY principle, core 36 keys would be duplicated
+
+### Decision: Option 1 (Layer-Specific Wrappers)
+
+**Rationale**:
+1. **Scalability**: Start with standard `LAYOUT_split_3x5_3`, add specialized wrappers only when needed
+2. **Future gaming layer**: Aligns with deferred feature (spec.md Future Work) - can add `LAYOUT_split_3x5_3_WITH_NUMROW` later
+3. **Readability**: `LAYOUT_split_3x5_3_WITH_NUMROW(LAYER_GAMING)` clearly communicates intent
+4. **Proven pattern**: Commonly used in QMK community for similar multi-keyboard setups
+
+**Implementation**:
+- Phase 5 (tasks.md): Implement standard `LAYOUT_split_3x5_3` wrapper for Lulu and Lily58
+- Future work: Add specialized wrappers as needed for layers with extras
+
+**Reference**: See `WRAPPER_MACRO_QUESTION.md` for detailed analysis of all three approaches.
+
+---
+
 ## Next Steps
 
 With research complete, proceed to Phase 1 (Design & Contracts):
