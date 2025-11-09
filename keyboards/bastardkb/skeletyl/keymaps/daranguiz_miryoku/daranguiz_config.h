@@ -57,6 +57,3 @@
 #define NO_ACTION_MACRO
 #define NO_ACTION_FUNCTION
 
-//////////////////////// - Keyboard layout
-
-#define DARIO_THUMB_SHIFT

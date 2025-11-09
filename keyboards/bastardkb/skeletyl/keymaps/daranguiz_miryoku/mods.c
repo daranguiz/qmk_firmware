@@ -85,11 +85,7 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 
         // I think these are sometimes rolled too.
         case LT(NUM, KC_BSPC):
-#if defined DARIO_THUMB_SHIFT
         case LT(SYM, KC_DEL): // for thumb shift layout
-#else
-        case LT(SYM, KC_ENT): // for standard layout
-#endif
             return true;
 
         default:
